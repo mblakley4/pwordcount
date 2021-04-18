@@ -1,0 +1,15 @@
+Project 2 Report
+
+@author: Michael Blakley
+@email: <mzb0155@auburn.edu>
+@class: CS7500 - Adv. Op. Systems
+
+The larger design for my word count tool came from our class lectures and provided materials.  The program runs initially in the parent process before forking into a child process that counts the words in the text file input and returns a count to p1.
+
+I wrote a separate function to handle the file input as part of process one, but prior to the creation of the child process.  This allowed for error checking and handling before bothering to create a child process and reduces risk of an orphaned child process.  The file input will hand up to a max size hard coded input.  Then the function will iterate the input file depending on the buffer size to input the entire text file.
+
+Next the program creates two pipes and forks the parent process.  If the message size is larger than the pipe buffer, I loop the write to pipe a number of iterations depending upon the file size.  Either way, the whole message will be sent through the first pipe to the child process (p2).
+
+The child process keeps reading/looping the pipe until the EOF is detected. From there we pass the text to a simple word count function that returns a count.  That count is send through the second pipe back to the parent process (p1).  P1 then displays the count.
+
+I intended to separate my functions out into different files, but as this was only my second C program I hit more snags than expected.  I will plan to include a makefile on the next project.
